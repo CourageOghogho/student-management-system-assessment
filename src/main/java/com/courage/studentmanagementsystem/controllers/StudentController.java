@@ -4,21 +4,28 @@ package com.courage.studentmanagementsystem.controllers;
 import com.courage.studentmanagementsystem.models.pojos.ApiResponse;
 import com.courage.studentmanagementsystem.models.pojos.StudentDto;
 import com.courage.studentmanagementsystem.models.pojos.StudentRegistrationRequest;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/user")
 public class StudentController {
 
-    @PostMapping("/register")
-    public ApiResponse<StudentDto> createUser(@RequestBody StudentRegistrationRequest request){
+
+    @PostMapping("/new")
+    public ResponseEntity<StudentDto> createUser(@RequestBody StudentRegistrationRequest request){
 
         //update logic here
-
-        return new ApiResponse<>();
+        StudentDto student=new StudentDto();
+        return new ResponseEntity<>(student, HttpStatus.CREATED);
+    }
+    @GetMapping("/all")
+    public ApiResponse<StudentDto> getStudent(){
+        StudentDto student=new StudentDto(9L,"Courage","courage@gmail.com");
+        ApiResponse<StudentDto> ob=new ApiResponse<>(HttpStatus.OK,"object found",true,student);
+        System.out.println(ob);
+         return new ApiResponse<>(HttpStatus.OK,"object found",true,student);
     }
 }
 
