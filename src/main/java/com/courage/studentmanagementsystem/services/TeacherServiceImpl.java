@@ -6,7 +6,7 @@ import com.courage.studentmanagementsystem.models.pojos.TeacherDto;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TeacherServiceImpl implements TeacherService {
+public class TeacherServiceImpl implemen TeacherService {
     @Override
     public ApiResponse<TeacherDto> create(TeachRegistrationRequest request) {
         return null;
