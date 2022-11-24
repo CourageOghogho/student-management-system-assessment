@@ -1,6 +1,7 @@
 package com.courage.studentmanagementsystem.models.entities;
 
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Student extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,5 +29,16 @@ public class Student extends BaseEntity{
             unique = true
     )
     private String email;
+    @Column(
+            name = "name",
+            nullable = false
+    )
+    private String name;
+    @Column(
+            name = "password",
+            nullable = false
+    )
+    private String password;  //better encrypted at all cost
+
 
 }

@@ -4,35 +4,45 @@ package com.courage.studentmanagementsystem.controllers;
 import com.courage.studentmanagementsystem.models.pojos.ApiResponse;
 import com.courage.studentmanagementsystem.models.pojos.StudentDto;
 import com.courage.studentmanagementsystem.models.pojos.StudentRegistrationRequest;
-import org.springframework.http.HttpStatus;
+import com.courage.studentmanagementsystem.services.StudentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1/user")
+@RequestMapping("api/v1/students")
 public class StudentController {
+    private  StudentService studentService;
 
 
     @PostMapping("/new")
-    public ResponseEntity<StudentDto> createUser(@RequestBody StudentRegistrationRequest request){
+    public ApiResponse<StudentDto> createUser(@RequestBody StudentRegistrationRequest request){
+        return studentService.register(request);
+    }
 
-        //update logic here
-        StudentDto student=new StudentDto();
-        return new ResponseEntity<>(student, HttpStatus.CREATED);
+    @GetMapping("/student")
+    public ApiResponse<StudentDto> getStudent(@RequestParam("id") Long studentId){
+        return studentService.getStudent(studentId);
     }
     @GetMapping("/all")
     public ApiResponse<StudentDto> getStudent(){
-        StudentDto student=new StudentDto(9L,"Courage","courage@gmail.com");
-        ApiResponse<StudentDto> ob=new ApiResponse<>(HttpStatus.OK,"object found",true,student);
-        System.out.println(ob);
-         return new ApiResponse<>(HttpStatus.OK,"object found",true,student);
+         return studentService.allStudents();
     }
+    @GetMapping("/in-subject")
+    public ApiResponse<StudentDto> enrolledInSubject(@RequestParam("subject") String subject){
+        return studentService.studentsInSubject(subject);
+    }
+
+    @GetMapping("/in-class")
+    public ApiResponse<StudentDto> enrolledInClass(@RequestParam("studentClass") String studentClass){
+        return studentService.studentsInClass(studentClass);
+    }
+
+    @GetMapping("/in-term")
+    public ApiResponse<StudentDto> enrolledInATerm(@RequestParam("term") String term){
+        return studentService.studentsInATerm(term);
+    }
+
+
 }
 
 
-//    git init
-//    git add README.md
-//        git commit -m "first commit"
-//        git branch -M main
-//        git remote add https://github.com/CourageOghogho/studentmanagementsystemhrbp.git
-//        git push -u origin main
